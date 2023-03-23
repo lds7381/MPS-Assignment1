@@ -48,7 +48,7 @@ int main( int argc, char **argv )
 {
 
   CmdArgs cmd_args;                       // Command line arguments.
-  int num_comps, num_dendrs;              // Simulation parameters.
+  int num_comps, num_dendrs, r_num_dendrs;              // Simulation parameters.
   int i, j, t_ms, step, dendrite;         // Various indexing variables.
   struct timeval start, stop, diff;       // Values used to measure time.
 
@@ -244,7 +244,7 @@ int main( int argc, char **argv )
         }
 
         // Send Soma Params and y to SOMA Master
-        MPI_Send( &(soma_param[2]), 1, MPI_INT, 0, 1, MPI_COMM_WORLD );
+        MPI_Send( &(soma_params[2]), 1, MPI_INT, 0, 1, MPI_COMM_WORLD );
 
       }
       else {
@@ -252,7 +252,7 @@ int main( int argc, char **argv )
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)){
           MPI_Recv( &param, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
-          soma_param[2] += param;
+          soma_params[2] += param;
           receives++;
         }
 
@@ -329,4 +329,5 @@ int main( int argc, char **argv )
   free(dendr_volt);
 
   return 0;
+}
 }
