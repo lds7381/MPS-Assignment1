@@ -276,8 +276,6 @@ int main( int argc, char **argv )
         }
       }
 
-    }
-
     // Record the membrane potential of the soma at this simulation step.
     // Let's show where we are in terms of computation.
     printf("\r%02d ms, res = %f",t_ms, y[0]); fflush(stdout);
