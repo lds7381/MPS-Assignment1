@@ -138,32 +138,6 @@ int main( int argc, char **argv )
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Initalize MPI  (ADDED IN - EDIT HERE)
-  //////////////////////////////////////////////////////////////////////////////
-
-  /* ********** MPI Variables ********** */
-  int numtasks, rank, rc, receives = 0, param;
-  int n; // indexing
-  MPI_Status status;
-
-  // Initalize MPI 
-  rc = MPI_Init( &argc, &argv );
-  // Check if successful
-  if (rc != MPI_SUCCESS) {
-    fprintf( stderr, "Error starting MPI.\n" );
-    MPI_Abort( MPI_COMM_WORLD, rc );
-  }
-
-  // Get rank and number of tasks
-  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
-  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
-
-  // IF master node
-  if (rank == 1) {
-    printf("Starting...  Number of Tasks: %d\n", numtasks);
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
   // Initialize simulation parameters. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
 
@@ -196,6 +170,31 @@ int main( int argc, char **argv )
 	}
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Initalize MPI  (ADDED IN - EDIT HERE)
+  //////////////////////////////////////////////////////////////////////////////
+
+  /* ********** MPI Variables ********** */
+  int numtasks, rank, rc, receives = 0, param;
+  int n; // indexing
+  MPI_Status status;
+
+  // Initalize MPI 
+  rc = MPI_Init( &argc, &argv );
+  // Check if successful
+  if (rc != MPI_SUCCESS) {
+    fprintf( stderr, "Error starting MPI.\n" );
+    MPI_Abort( MPI_COMM_WORLD, rc );
+  }
+
+  // Get rank and number of tasks
+  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
+  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
+
+  // IF master node
+  if (rank == 0) {
+    printf("Starting...  Number of Tasks: %d\n", numtasks);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Main computation.  (EDIT HERE)
@@ -219,7 +218,6 @@ int main( int argc, char **argv )
     }
   }
 
-
   // Loop over milliseconds.
   for (t_ms = 1; t_ms < COMPTIME; t_ms++) {
 
@@ -230,7 +228,7 @@ int main( int argc, char **argv )
       // ********* DENDRITE *********
 
       // Loop over all the dendrites. #3 (Start MPI Break up here)
-      if (rank != 1) {
+      if (rank != 0) {
         for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
           // This will update Vm in all compartments and will give a new injected
           // current value from last compartment into the soma.
@@ -275,6 +273,7 @@ int main( int argc, char **argv )
     res[t_ms] = y[0];
   }
 
+  // CLOSE MPI
   MPI_Finalize();
 
   //////////////////////////////////////////////////////////////////////////////
