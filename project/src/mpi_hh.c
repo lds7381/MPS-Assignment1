@@ -274,8 +274,10 @@ int main( int argc, char **argv )
         for (int i = 1; i <= (numtasks-1); i++) {
           MPI_Send( y, 4, MPI_INT, i, 1, MPI_COMM_WORLD );
         }
-        
+
       }
+
+    }
 
     // Record the membrane potential of the soma at this simulation step.
     // Let's show where we are in terms of computation.
