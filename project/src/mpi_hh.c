@@ -229,6 +229,12 @@ int main( int argc, char **argv )
 
       // Loop over all the dendrites. #3 (Start MPI Break up here)
       if (rank != 0) {
+
+        // receive previous y values (if past first step)
+        if (step > 0) {
+          MPI_Recv(y, 4, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+        }
+
         for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
           // This will update Vm in all compartments and will give a new injected
           // current value from last compartment into the soma.
@@ -264,11 +270,17 @@ int main( int argc, char **argv )
         soma(dydt, y, soma_params);
         rk4Step(y, y0, dydt, NUMVAR, soma_params, 1, soma);
 
+        // Send updated y value to all 
+        for (int i = 1; i <= (numtasks-1); i++) {
+          MPI_Send( y, 4, MPI_INT, i, 1, MPI_COMM_WORLD );
+        }
+      }
+
     }
 
     // Record the membrane potential of the soma at this simulation step.
     // Let's show where we are in terms of computation.
-    printf("\r%02d ms",t_ms); fflush(stdout);
+    printf("\r%02d ms, res = %f",t_ms, y[0]); fflush(stdout);
 
     res[t_ms] = y[0];
   }
@@ -329,4 +341,4 @@ int main( int argc, char **argv )
 
   return 0;
 }
-}
+
