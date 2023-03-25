@@ -100,7 +100,9 @@ int main( int argc, char **argv )
     }
   }
   else {
-    printf("Task %d Starting... \n", rank);
+    if (rank > 0) {
+      printf("Task %d Starting... \n", rank);
+    }
   }
 
 
@@ -257,7 +259,7 @@ if (rank != 0) {
 
         // receive previous y values (if past first step)
         if (step > 0) {
-          MPI_Recv(y, 4, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+          MPI_Recv(y, 4, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
         }
 
         for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
@@ -277,7 +279,7 @@ if (rank != 0) {
 
       }
       else {
-
+        receives = 0;
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)){
           MPI_Recv( &param, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
@@ -297,7 +299,7 @@ if (rank != 0) {
 
         // Send updated y value to all 
         for (int i = 1; i <= (numtasks-1); i++) {
-          MPI_Send( y, 4, MPI_INT, i, 1, MPI_COMM_WORLD );
+          MPI_Send( y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD );
         }
 
       }
