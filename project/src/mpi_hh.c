@@ -221,22 +221,21 @@ if (rank != 0) {
   // Main computation.  (EDIT HERE)
   //////////////////////////////////////////////////////////////////////////////
 
-  // Update num dendrites to be split among tasks
-  r_num_dendrs = num_dendrs % (numtasks - 1);
-  num_dendrs = num_dendrs / (numtasks - 1);
-  // Handle remainder
-  if (r_num_dendrs > 0) {
-    int cur_task = 1;
-    for (n = 0; n < r_num_dendrs; n++) {
-      if (cur_task > numtasks) {cur_task = 1;}
-      if (rank == cur_task) {
-        num_dendrs++;
+  if (rank > 0) {
+    // Update num dendrites to be split among tasks
+    r_num_dendrs = num_dendrs % (numtasks - 1);
+    num_dendrs = num_dendrs / (numtasks - 1);
+    // Handle remainder
+    if (r_num_dendrs > 0) {
+      int cur_task = 1;
+      for (n = 0; n < r_num_dendrs; n++) {
+        if (cur_task > numtasks) {cur_task = 1;}
+        if (rank == cur_task) {
+          num_dendrs++;
+        }
+        cur_task++;
       }
-      cur_task++;
     }
-  }
-
-  if (rank != 0) {
     printf("%d rank doing %d tasks\n", rank, num_dendrs);
   }
 
@@ -275,14 +274,14 @@ if (rank != 0) {
         }
 
         // Send Soma Params and y to SOMA Master
-        MPI_Send( &(soma_params[2]), 1, MPI_INT, 0, 1, MPI_COMM_WORLD );
+        MPI_Send( &(soma_params[2]), 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD );
 
       }
       else {
         receives = 0;
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)){
-          MPI_Recv( &param, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
+          MPI_Recv( &param, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
           soma_params[2] += param;
           receives++;
         }
