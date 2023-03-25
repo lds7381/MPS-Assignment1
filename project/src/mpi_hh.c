@@ -91,7 +91,17 @@ int main( int argc, char **argv )
   MPI_Comm_rank( MPI_COMM_WORLD, &rank);
   MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
 
-  printf("Starting...  Task: %d\n", rank);
+  // Make sure we have atleas the minimum amount of tasks needed (6)
+  if (numtasks < 6) {
+    if (rank == 0) {
+      printf("Unable to start necessary amount of MPI tasks!\n");
+      MPI_Abort(MPI_COMM_WORLD, rc);
+      return 0;
+    }
+  }
+  else {
+    printf("Task %d Starting... \n", rank);
+  }
 
 
   //////////////////////////////////////////////////////////////////////////////
