@@ -221,6 +221,31 @@ int main( int argc, char **argv )
   }
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Initalize MPI  (ADDED IN - EDIT HERE)
+  //////////////////////////////////////////////////////////////////////////////
+
+  /* ********** MPI Variables ********** */
+  int numtasks, rank, rc, receives = 0, param;
+  int n; // indexing
+  MPI_Status status;
+
+  // Initalize MPI 
+  rc = MPI_Init( &argc, &argv );
+  // Check if successful
+  if (rc != MPI_SUCCESS) {
+    fprintf( stderr, "Error starting MPI.\n" );
+    MPI_Abort( MPI_COMM_WORLD, rc );
+  }
+
+  // Get rank and number of tasks
+  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
+  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
+
+  // IF master node
+  if (rank == 0) {
+    printf("Starting...  Number of Tasks: %d\n", numtasks);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Main computation.  (EDIT HERE)

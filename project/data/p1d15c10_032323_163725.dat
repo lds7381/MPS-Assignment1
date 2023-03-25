@@ -1,4 +1,4 @@
-# Vm for HH model. Simulation time: 100 ms, Integration step: 0.000100 ms, Compartments: 10, Dendrites: 15, Execution time: 31.832930 s, Slave processes: 0
+# Vm for HH model. Simulation time: 100 ms, Integration step: 0.000100 ms, Compartments: 10, Dendrites: 15, Execution time: 37.814351 s, Slave processes: 0
 # X Y
 0 -65.000000
 1 -58.162197
