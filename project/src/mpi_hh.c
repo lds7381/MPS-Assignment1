@@ -49,7 +49,7 @@ int main( int argc, char **argv )
 
   CmdArgs cmd_args;                       // Command line arguments.
   int num_comps, num_dendrs, r_num_dendrs;              // Simulation parameters.
-  int i, j, t_ms, step, dendrite;         // Various indexing variables.
+  int i, j, t_ms, step, dendrite, num_dendrs_per_task;         // Various indexing variables.
   struct timeval start, stop, diff;       // Values used to measure time.
 
   double exec_time;  // How long we take.
@@ -70,6 +70,32 @@ int main( int argc, char **argv )
 
   PlotInfo pinfo;   // Info passed to the plotting functions.
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Initalize MPI  (ADDED IN - EDIT HERE)
+  //////////////////////////////////////////////////////////////////////////////
+
+  /* ********** MPI Variables ********** */
+  int numtasks, rank, rc, receives = 0;
+  double param;
+  int n; // indexing
+  MPI_Status status;
+
+  // Initalize MPI 
+  rc = MPI_Init( &argc, &argv );
+  // Check if successful
+  if (rc != MPI_SUCCESS) {
+    fprintf( stderr, "Error starting MPI.\n" );
+    MPI_Abort( MPI_COMM_WORLD, rc );
+  }
+
+  // Get rank and number of tasks
+  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
+  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
+
+  // IF master node
+  if (rank == 1) {
+    printf("Starting...  Number of Tasks: %d\n", numtasks);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Parse command line arguments.  (DONT EDIT)
@@ -86,11 +112,12 @@ int main( int argc, char **argv )
 
   printf( "Simulating %d dendrites with %d compartments per dendrite.\n",
 		  num_dendrs, num_comps );
-
+  fflush(stdout);
+  
   //////////////////////////////////////////////////////////////////////////////
   // Create files where results will be stored. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
-
+  if(rank == 0){
   // Generate the graph and data file names.
   time_t t = time(NULL);
   struct tm *tmp = localtime( &t );
@@ -136,31 +163,6 @@ int main( int argc, char **argv )
 	printf( "Graph will be stored in %s\n", graph_fname );
 	fclose(graph_file);
   }
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Initalize MPI  (ADDED IN - EDIT HERE)
-  //////////////////////////////////////////////////////////////////////////////
-
-  /* ********** MPI Variables ********** */
-  int numtasks, rank, rc, receives = 0, param;
-  int n; // indexing
-  MPI_Status status;
-
-  // Initalize MPI 
-  rc = MPI_Init( &argc, &argv );
-  // Check if successful
-  if (rc != MPI_SUCCESS) {
-    fprintf( stderr, "Error starting MPI.\n" );
-    MPI_Abort( MPI_COMM_WORLD, rc );
-  }
-
-  // Get rank and number of tasks
-  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
-  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
-
-  // IF master node
-  if (rank == 1) {
-    printf("Starting...  Number of Tasks: %d\n", numtasks);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -181,12 +183,34 @@ int main( int argc, char **argv )
   soma_params[1] = 0.0;  // Direct current injection into soma is always zero.
   soma_params[2] = 0.0;  // Dendritic current injected into soma. This is the
 						 // value that our simulation will update at each step.
-
+  if(rank == 0){
   printf( "\nIntegration step dt = %f\n", soma_params[0]);
-
+  
   // Start the clock.
   gettimeofday( &start, NULL );
+  }
+  
+  if(rank != 0){
 
+  // Update num dendrites to be split among tasks
+  r_num_dendrs = num_dendrs % (numtasks - 1);
+  num_dendrs_per_task = num_dendrs / (numtasks - 1);
+  // Handle remainder
+  if (r_num_dendrs > 0) {
+    int cur_task = 1;
+    for (n = 0; n < r_num_dendrs; n++) {
+      if (cur_task > numtasks) {cur_task = 1;}
+      if (rank == cur_task) {
+        num_dendrs_per_task++;
+      }
+      cur_task++;
+    }
+  }
+   
+  }
+  
+  printf("%d rank doing %d task", rank,num_dendrs_per_task ); fflush(stdout);
+  if(rank != 0){
   // Initialize the potential of each dendrite compartment to the rest voltage.
   dendr_volt = (double**) malloc( num_dendrs * sizeof(double*) );
   for (i = 0; i < num_dendrs; i++) {
@@ -195,31 +219,20 @@ int main( int argc, char **argv )
 	  dendr_volt[i][j] = VREST;
 	}
   }
+  }
 
 
   //////////////////////////////////////////////////////////////////////////////
   // Main computation.  (EDIT HERE)
   //////////////////////////////////////////////////////////////////////////////
-
+  
+  if(rank == 0){
   // Record the initial potential value in our results array. #1
   res[0] = y[0];
-
-  // Update num dendrites to be split among tasks
-  r_num_dendrs = num_dendrs % (numtasks - 1);
-  num_dendrs = num_dendrs / (numtasks - 1);
-  // Handle remainder
-  if (r_num_dendrs > 0) {
-    int cur_task = 1;
-    for (n = 0; n < r_num_dendrs; n++) {
-      if (cur_task > numtasks) {cur_task = 1;}
-      if (rank == cur_task) {
-        num_dendrs++;
-      }
-      cur_task++;
-    }
   }
-
-
+  
+  
+  
   // Loop over milliseconds.
   for (t_ms = 1; t_ms < COMPTIME; t_ms++) {
 
@@ -230,8 +243,9 @@ int main( int argc, char **argv )
       // ********* DENDRITE *********
 
       // Loop over all the dendrites. #3 (Start MPI Break up here)
-      if (rank != 1) {
-        for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
+      if (rank != 0) {
+        printf("%d rank", rank); fflush(stdout);
+        for (dendrite = 0; dendrite < num_dendrs_per_task; dendrite++) {
           // This will update Vm in all compartments and will give a new injected
           // current value from last compartment into the soma.
           current = dendriteStep( dendr_volt[ dendrite ],
@@ -244,14 +258,18 @@ int main( int argc, char **argv )
         }
 
         // Send Soma Params and y to SOMA Master
-        MPI_Send( &(soma_params[2]), 1, MPI_INT, 0, 1, MPI_COMM_WORLD );
+        MPI_Send( &(soma_params[2]), 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD );
+       
+        MPI_Recv( &(y[0]), 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD, &status);
 
       }
       else {
-
+        receives = 0;
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)){
-          MPI_Recv( &param, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
+          printf("%d ms",receives); fflush(stdout);
+
+          MPI_Recv( &param, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
           soma_params[2] += param;
           receives++;
         }
@@ -265,22 +283,27 @@ int main( int argc, char **argv )
         // soma, injects current, and calculates action potential. Good stuff.
         soma(dydt, y, soma_params);
         rk4Step(y, y0, dydt, NUMVAR, soma_params, 1, soma);
-
+        for(int workers = 1; workers == numtasks-1; workers++){
+          MPI_Send(&(y[0]), 1, MPI_DOUBLE, workers, 1, MPI_COMM_WORLD);
+        }
     }
-
+    
+  }
+  if(rank == 0){
     // Record the membrane potential of the soma at this simulation step.
     // Let's show where we are in terms of computation.
     printf("\r%02d ms",t_ms); fflush(stdout);
 
     res[t_ms] = y[0];
+    }
   }
 
-  MPI_Finalize();
+ 
 
   //////////////////////////////////////////////////////////////////////////////
   // Report results of computation. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
-
+  if( rank == 0){
   // Stop the clock, compute how long the program was running and report that
   // time.
   gettimeofday( &stop, NULL );
@@ -318,16 +341,19 @@ int main( int argc, char **argv )
 
   if (ISDEF_PLOT_PNG) {    plotData( &pinfo, data_fname, graph_fname ); }
   if (ISDEF_PLOT_SCREEN) { plotData( &pinfo, data_fname, NULL ); }
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Free up allocated memory. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
-
+  if(rank != 0){
   for(i = 0; i < num_dendrs; i++) {
 	free(dendr_volt[i]);
   }
   free(dendr_volt);
-
+  }
+  
+  MPI_Finalize();
   return 0;
 }
-}
+
