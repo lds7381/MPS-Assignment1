@@ -314,13 +314,11 @@ if (rank != 0) {
     }
   }
 
-  // CLOSE MPI
-  MPI_Finalize();
 
   //////////////////////////////////////////////////////////////////////////////
   // Report results of computation. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
-
+  if (rank == 0) {
   // Stop the clock, compute how long the program was running and report that
   // time.
   gettimeofday( &stop, NULL );
@@ -367,7 +365,10 @@ if (rank != 0) {
 	free(dendr_volt[i]);
   }
   free(dendr_volt);
-
+  }
+  
+  // CLOSE MPI
+  MPI_Finalize();
   return 0;
 }
 
