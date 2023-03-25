@@ -70,27 +70,54 @@ int main( int argc, char **argv )
 
   PlotInfo pinfo;   // Info passed to the plotting functions.
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Initalize MPI  (ADDED IN - EDIT HERE)
+  //////////////////////////////////////////////////////////////////////////////
+
+  /* ********** MPI Variables ********** */
+  int numtasks, rank, rc, receives = 0, param;
+  int n; // indexing
+  MPI_Status status;
+
+  // Initalize MPI 
+  rc = MPI_Init( &argc, &argv );
+  // Check if successful
+  if (rc != MPI_SUCCESS) {
+    fprintf( stderr, "Error starting MPI.\n" );
+    MPI_Abort( MPI_COMM_WORLD, rc );
+  }
+
+  // Get rank and number of tasks
+  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
+  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
+
+  printf("Starting...  Task: %d\n", rank);
+
 
   //////////////////////////////////////////////////////////////////////////////
   // Parse command line arguments.  (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
 
+  
   if (!parseArgs( &cmd_args, argc, argv )) {
-	// Something was wrong.
-	exit(1);
+  // Something was wrong.
+  exit(1);
   }
 
   // Pull out the parameters so we don't need to type 'cmd_args.' all the time.
   num_dendrs = cmd_args.num_dendrs;
   num_comps  = cmd_args.num_comps;
 
-  printf( "Simulating %d dendrites with %d compartments per dendrite.\n",
-		  num_dendrs, num_comps );
+  if (rank == 0) {
+    printf( "Simulating %d dendrites with %d compartments per dendrite.\n",
+        num_dendrs, num_comps );
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Create files where results will be stored. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
 
+  if (rank == 0) {
   // Generate the graph and data file names.
   time_t t = time(NULL);
   struct tm *tmp = localtime( &t );
@@ -137,6 +164,8 @@ int main( int argc, char **argv )
 	fclose(graph_file);
   }
 
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Initialize simulation parameters. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
@@ -156,10 +185,14 @@ int main( int argc, char **argv )
   soma_params[2] = 0.0;  // Dendritic current injected into soma. This is the
 						 // value that our simulation will update at each step.
 
-  printf( "\nIntegration step dt = %f\n", soma_params[0]);
+if (rank == 0) {
+    printf( "\nIntegration step dt = %f\n", soma_params[0]);
 
-  // Start the clock.
-  gettimeofday( &start, NULL );
+    // Start the clock.
+    gettimeofday( &start, NULL );
+}
+
+if (rank != 0) {
 
   // Initialize the potential of each dendrite compartment to the rest voltage.
   dendr_volt = (double**) malloc( num_dendrs * sizeof(double*) );
@@ -170,38 +203,11 @@ int main( int argc, char **argv )
 	}
   }
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Initalize MPI  (ADDED IN - EDIT HERE)
-  //////////////////////////////////////////////////////////////////////////////
-
-  /* ********** MPI Variables ********** */
-  int numtasks, rank, rc, receives = 0, param;
-  int n; // indexing
-  MPI_Status status;
-
-  // Initalize MPI 
-  rc = MPI_Init( &argc, &argv );
-  // Check if successful
-  if (rc != MPI_SUCCESS) {
-    fprintf( stderr, "Error starting MPI.\n" );
-    MPI_Abort( MPI_COMM_WORLD, rc );
-  }
-
-  // Get rank and number of tasks
-  MPI_Comm_rank( MPI_COMM_WORLD, &rank);
-  MPI_Comm_size( MPI_COMM_WORLD, &numtasks);
-
-  // IF master node
-  if (rank == 0) {
-    printf("Starting...  Number of Tasks: %d\n", numtasks);
-  }
+}
 
   //////////////////////////////////////////////////////////////////////////////
   // Main computation.  (EDIT HERE)
   //////////////////////////////////////////////////////////////////////////////
-
-  // Record the initial potential value in our results array. #1
-  res[0] = y[0];
 
   // Update num dendrites to be split among tasks
   r_num_dendrs = num_dendrs % (numtasks - 1);
@@ -216,6 +222,15 @@ int main( int argc, char **argv )
       }
       cur_task++;
     }
+  }
+
+  if (rank != 0) {
+    printf("%d rank doing %d tasks\n", rank, num_dendrs);
+  }
+
+  if (rank == 0) {
+    // Record the initial potential value in our results array. #1
+    res[0] = y[0];
   }
 
   // Loop over milliseconds.
@@ -279,11 +294,13 @@ int main( int argc, char **argv )
 
     }
 
-    // Record the membrane potential of the soma at this simulation step.
-    // Let's show where we are in terms of computation.
-    printf("\r%02d ms, res = %f",t_ms, y[0]); fflush(stdout);
+    if (rank == 0) {
+      // Record the membrane potential of the soma at this simulation step.
+      // Let's show where we are in terms of computation.
+      printf("\r%02d ms, res = %f",t_ms, y[0]); fflush(stdout);
 
-    res[t_ms] = y[0];
+      res[t_ms] = y[0];
+    }
   }
 
   // CLOSE MPI
