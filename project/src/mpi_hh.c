@@ -237,7 +237,7 @@ if (rank != 0) {
         cur_task++;
       }
     }
-    printf("%d rank doing %d tasks\n", rank, num_dendrs);
+    printf("%d rank doing %d dendrites\n", rank, num_dendrs);
   }
 
   if (rank == 0) {
@@ -362,6 +362,8 @@ if (rank != 0) {
   if (ISDEF_PLOT_PNG) {    plotData( &pinfo, data_fname, graph_fname ); }
   if (ISDEF_PLOT_SCREEN) { plotData( &pinfo, data_fname, NULL ); }
 
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // Free up allocated memory. (DONT EDIT)
   //////////////////////////////////////////////////////////////////////////////
@@ -370,8 +372,7 @@ if (rank != 0) {
 	free(dendr_volt[i]);
   }
   free(dendr_volt);
-  }
-
+  
   // CLOSE MPI
   MPI_Finalize();
   return 0;
