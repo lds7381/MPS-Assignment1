@@ -108,7 +108,7 @@ int main( int argc, char **argv )
 
 
   //////////////////////////////////////////////////////////////////////////////
-  // Parse command line arguments.  (DONT EDIT)
+  // Parse command line arguments.  
   //////////////////////////////////////////////////////////////////////////////
 
   
@@ -127,7 +127,7 @@ int main( int argc, char **argv )
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Create files where results will be stored. (DONT EDIT)
+  // Create files where results will be stored. 
   //////////////////////////////////////////////////////////////////////////////
 
   if (rank == 0) {
@@ -180,7 +180,7 @@ int main( int argc, char **argv )
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Initialize simulation parameters. (DONT EDIT)
+  // Initialize simulation parameters. 
   //////////////////////////////////////////////////////////////////////////////
 
   // The first compartment is a dummy and the last is connected to the soma.
@@ -219,7 +219,7 @@ if (rank != 0) {
 }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Main computation.  (EDIT HERE)
+  // Main computation.  
   //////////////////////////////////////////////////////////////////////////////
 
   if (rank > 0) {
@@ -321,7 +321,7 @@ if (rank != 0) {
 
 
   //////////////////////////////////////////////////////////////////////////////
-  // Report results of computation. (DONT EDIT)
+  // Report results of computation. 
   //////////////////////////////////////////////////////////////////////////////
   if (rank == 0) {
   // Stop the clock, compute how long the program was running and report that
@@ -338,7 +338,7 @@ if (rank != 0) {
 		   "Compartments: %d, Dendrites: %d, Execution time: %f s, "
 		   "Slave processes: %d\n",
 		   COMPTIME, soma_params[0], num_comps - 2, num_dendrs, exec_time,
-		   0 );
+		   numtasks );
   fprintf( data_file, "# X Y\n");
 
   for (t_ms = 0; t_ms < COMPTIME; t_ms++) {
@@ -348,7 +348,7 @@ if (rank != 0) {
   fclose(data_file);  // see it.
 
   //////////////////////////////////////////////////////////////////////////////
-  // Plot results if approriate macro was defined. (DONT EDIT)
+  // Plot results if approriate macro was defined 
   //////////////////////////////////////////////////////////////////////////////
   if (ISDEF_PLOT_PNG || ISDEF_PLOT_SCREEN) {
 	pinfo.sim_time = COMPTIME;
@@ -365,7 +365,7 @@ if (rank != 0) {
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // Free up allocated memory. (DONT EDIT)
+  // Free up allocated memory. 
   //////////////////////////////////////////////////////////////////////////////
 
   for(i = 0; i < num_dendrs; i++) {
