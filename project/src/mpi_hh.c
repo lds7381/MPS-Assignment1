@@ -242,6 +242,10 @@ if (rank != 0) {
   if (rank == 0) {
     // Record the initial potential value in our results array. #1
     res[0] = y[0];
+    // send initalial starting y values
+    for (int i = 1; i <= (numtasks-1); i++) {
+      MPI_Send( y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD );
+    }
   }
 
   // Loop over milliseconds.
@@ -257,9 +261,7 @@ if (rank != 0) {
       if (rank != 0) {
 
         // receive previous y values (if past first step)
-        if (step > 0) {
-          MPI_Recv(y, 4, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-        }
+        MPI_Recv(y, 4, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
         for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
           // This will update Vm in all compartments and will give a new injected
@@ -366,7 +368,7 @@ if (rank != 0) {
   }
   free(dendr_volt);
   }
-  
+
   // CLOSE MPI
   MPI_Finalize();
   return 0;
