@@ -59,6 +59,7 @@ int main( int argc, char **argv )
   //       double*.
   double current, **dendr_volt;
   double res[COMPTIME], y[NUMVAR], y0[NUMVAR], dydt[NUMVAR], soma_params[3];
+  double temp_soma[3];
 
   // Strings used to store filenames for the graph and data files.
   char time_str[14];
@@ -75,7 +76,7 @@ int main( int argc, char **argv )
   //////////////////////////////////////////////////////////////////////////////
 
   /* ********** MPI Variables ********** */
-  int numtasks, rank, rc, receives = 0, param;
+  int numtasks, rank, rc, receives = 0;
   int n; // indexing
   MPI_Status status;
 
@@ -276,15 +277,17 @@ if (rank != 0) {
         }
 
         // Send Soma Params and y to SOMA Master
-        MPI_Send( &(soma_params[2]), 1, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD );
+        MPI_Send( soma_params, 3, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD );
 
       }
       else {
         receives = 0;
+        temp_soma[0] = 0.0; temp_soma[1] = 0.0; temp_soma[2] = 0.0;  
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)){
-          MPI_Recv( &param, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
-          soma_params[2] += param;
+          MPI_Recv( temp_soma, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
+          soma_params[2] += temp_soma[2];
+          temp_soma[2] = 0.0;  
           receives++;
         }
 
