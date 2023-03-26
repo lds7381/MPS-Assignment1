@@ -346,14 +346,6 @@ int main(int argc, char **argv) {
 
     //////////////////////////////////////////////////////////////////////////////
     // Plot results if approriate macro was defined
-  // Plot results if approriate macro was defined 
-    // Plot results if approriate macro was defined
-  // Plot results if approriate macro was defined 
-    // Plot results if approriate macro was defined
-  // Plot results if approriate macro was defined 
-    // Plot results if approriate macro was defined
-  // Plot results if approriate macro was defined 
-    // Plot results if approriate macro was defined
     //////////////////////////////////////////////////////////////////////////////
     if (ISDEF_PLOT_PNG || ISDEF_PLOT_SCREEN) {
       pinfo.sim_time = COMPTIME;
