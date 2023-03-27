@@ -1,0 +1,171 @@
+Simulating 30 dendrites with 100 compartments per dendrite.
+
+Data will be stored in data/p1d30c100_032723_141213.dat
+Graph will be stored in graphs/p1d30c100_032723_141213.png
+
+Integration step dt = 0.000100
+01 ms, res = -62.22946002 ms, res = -57.77106403 ms, res = -48.33133104 ms, res = -38.38277205 ms, res = -62.42255906 ms, res = -57.40354707 ms, res = -52.18616808 ms, res = 1.33170209 ms, res = -63.40943810 ms, res = -58.21826811 ms, res = -53.65558612 ms, res = 31.25753313 ms, res = -63.64530914 ms, res = -59.19063615 ms, res = -54.82005616 ms, res = -30.95220917 ms, res = -59.16988418 ms, res = -60.27234819 ms, res = -55.83607820 ms, res = -47.62832021 ms, res = -41.39862422 ms, res = -61.47925523 ms, res = -56.78162424 ms, res = -51.08742625 ms, res = -15.42497526 ms, res = -62.75325027 ms, res = -57.70970928 ms, res = -52.92262629 ms, res = 19.97668930 ms, res = -63.70493031 ms, res = -58.66543432 ms, res = -54.23555233 ms, res = 17.24974834 ms, res = -62.59384535 ms, res = -59.69383736 ms, res = -55.31969537 ms, res = -43.33765638 ms, res = -52.26286539 ms, res = -60.83557240 ms, res = -56.29463041 ms, res = -49.65283942 ms, res = -30.32460443 ms, res = -62.09272044 ms, res = -57.22600445 ms, res = -52.06667646 ms, res = 1.44943747 ms, res = -63.30197348 ms, res = -58.16180149 ms, res = -53.59256550 ms, res = 30.86629751 ms, res = -63.66151252 ms, res = -59.14672353 ms, res = -54.77463754 ms, res = -28.77392055 ms, res = -59.56700756 ms, res = -60.22539057 ms, res = -55.79610658 ms, res = -47.40025459 ms, res = -42.30393260 ms, res = -61.42752061 ms, res = -56.74353462 ms, res = -50.99160863 ms, res = -16.74687664 ms, res = -62.70262165 ms, res = -57.67144866 ms, res = -52.86086567 ms, res = 18.65491368 ms, res = -63.68551369 ms, res = -58.62516570 ms, res = -54.18740771 ms, res = 20.47841872 ms, res = -62.73988773 ms, res = -59.64971174 ms, res = -55.27798975 ms, res = -42.79258776 ms, res = -53.00587977 ms, res = -60.78627678 ms, res = -56.25590879 ms, res = -49.51428080 ms, res = -31.33171681 ms, res = -62.03999382 ms, res = -57.18806883 ms, res = -51.99155684 ms, res = -0.06257485 ms, res = -63.25953386 ms, res = -58.12281087 ms, res = -53.53867188 ms, res = 30.39979489 ms, res = -63.69032190 ms, res = -59.10482891 ms, res = -54.73015492 ms, res = -26.22012693 ms, res = -59.94355294 ms, res = -60.17885995 ms, res = -55.75615496 ms, res = -47.15955897 ms, res = -43.20614098 ms, res = -61.37596899 ms, res = -56.705429
+
+Execution time: 93.777028 seconds.
+Task 4 Starting... 
+[1679940826.900870] [skl-a-03:31451:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fb0711e9fc0 was not matched
+Task 5 Starting... 
+[1679940826.910564] [skl-a-03:31452:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f7b63b9dfc0 was not matched
+Task 6 Starting... 
+[1679940826.904362] [skl-a-05:17059:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f667e8c1fc0 was not matched
+Task 7 Starting... 
+[1679940826.935591] [skl-a-05:17060:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fe24f53bfc0 was not matched
+Task 9 Starting... 
+[1679940826.935010] [skl-a-05:17062:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f3a13feefc0 was not matched
+Task 8 Starting... 
+[1679940826.937421] [skl-a-05:17061:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fed2c936fc0 was not matched
+Task 10 Starting... 
+[1679940826.938047] [skl-a-05:17063:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f33515d2fc0 was not matched
+Simulating 33 dendrites with 100 compartments per dendrite.
+
+Data will be stored in data/p1d33c100_032723_141348.dat
+Graph will be stored in graphs/p1d33c100_032723_141348.png
+
+Integration step dt = 0.000100
+01 ms, res = -62.11246502 ms, res = -57.51118903 ms, res = -46.39637204 ms, res = -42.29003105 ms, res = -61.20137506 ms, res = -56.36663407 ms, res = -50.02809108 ms, res = -25.67480609 ms, res = -61.36317410 ms, res = -56.56747211 ms, res = -50.94309412 ms, res = -13.64533213 ms, res = -61.74116314 ms, res = -56.88766215 ms, res = -51.67351916 ms, res = -0.99874517 ms, res = -62.11310418 ms, res = -57.22564119 ms, res = -52.29771120 ms, res = 11.95239621 ms, res = -62.40194122 ms, res = -57.56891523 ms, res = -52.84588824 ms, res = 23.11016125 ms, res = -62.52629826 ms, res = -57.91812127 ms, res = -53.33859328 ms, res = 29.05050529 ms, res = -62.35383030 ms, res = -58.27527531 ms, res = -53.78993632 ms, res = 21.80831433 ms, res = -61.65502234 ms, res = -58.64246935 ms, res = -54.20990636 ms, res = -11.19585137 ms, res = -60.03211038 ms, res = -59.02162039 ms, res = -54.60584140 ms, res = -34.89285341 ms, res = -56.88100942 ms, res = -59.41424643 ms, res = -54.98333344 ms, res = -42.72273945 ms, res = -51.69327746 ms, res = -59.82112247 ms, res = -55.34679948 ms, res = -46.18266349 ms, res = -44.81449550 ms, res = -60.24173651 ms, res = -55.69985452 ms, res = -48.18091753 ms, res = -37.18758254 ms, res = -60.67342755 ms, res = -56.04557156 ms, res = -49.53160657 ms, res = -28.85833858 ms, res = -61.11003459 ms, res = -56.38666160 ms, res = -50.53925061 ms, res = -18.87509062 ms, res = -61.53975263 ms, res = -56.72559964 ms, res = -51.34260265 ms, res = -7.02271566 ms, res = -61.94167967 ms, res = -57.06472068 ms, res = -52.01405569 ms, res = 5.91396370 ms, res = -62.28012071 ms, res = -57.40628872 ms, res = -52.59527373 ms, res = 18.25340074 ms, res = -62.49485375 ms, res = -57.75254076 ms, res = -53.11209077 ms, res = 27.19856878 ms, res = -62.48374379 ms, res = -58.10568880 ms, res = -53.58149281 ms, res = 27.86803782 ms, res = -62.07054683 ms, res = -58.46789484 ms, res = -54.01521185 ms, res = 6.71262686 ms, res = -60.94693787 ms, res = -58.84118688 ms, res = -54.42169689 ms, res = -26.87323490 ms, res = -58.60043491 ms, res = -59.22730392 ms, res = -54.80727593 ms, res = -39.95025994 ms, res = -54.39947495 ms, res = -59.62742896 ms, res = -55.17686597 ms, res = -44.82409498 ms, res = -48.20577699 ms, res = -60.041738
+
+Execution time: 104.783592 seconds.
+Task 5 Starting... 
+[1679940933.363555] [skl-a-03:31749:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f111efecfc0 was not matched
+Task 4 Starting... 
+[1679940933.372560] [skl-a-03:31748:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f8b87ec3fc0 was not matched
+Task 6 Starting... 
+[1679940933.367485] [skl-a-05:17476:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f275ffeefc0 was not matched
+Task 7 Starting... 
+[1679940933.399625] [skl-a-05:17477:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f0c595d2fc0 was not matched
+Task 9 Starting... 
+[1679940933.400168] [skl-a-05:17479:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7faf8c9b8fc0 was not matched
+Task 8 Starting... 
+[1679940933.400846] [skl-a-05:17478:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f9c74f06fc0 was not matched
+Task 10 Starting... 
+[1679940933.401381] [skl-a-05:17480:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f6adafd4fc0 was not matched
+Simulating 36 dendrites with 100 compartments per dendrite.
+
+Data will be stored in data/p1d36c100_032723_141534.dat
+Graph will be stored in graphs/p1d36c100_032723_141534.png
+
+Integration step dt = 0.000100
+01 ms, res = -62.00744002 ms, res = -57.28095703 ms, res = -44.12203204 ms, res = -44.96791605 ms, res = -60.14431206 ms, res = -55.44169307 ms, res = -47.08520308 ms, res = -40.62866109 ms, res = -59.63816410 ms, res = -55.12625011 ms, res = -46.30654312 ms, res = -42.94919113 ms, res = -59.41126914 ms, res = -54.94230115 ms, res = -45.16175016 ms, res = -46.01150717 ms, res = -59.22328518 ms, res = -54.77458619 ms, res = -43.64374320 ms, res = -48.98247021 ms, res = -59.04122122 ms, res = -54.60617223 ms, res = -41.55940024 ms, res = -51.69043225 ms, res = -58.86175326 ms, res = -54.43491827 ms, res = -38.51705328 ms, res = -54.04518329 ms, res = -58.68464930 ms, res = -54.26021231 ms, res = -33.72940232 ms, res = -56.00185033 ms, res = -58.50993334 ms, res = -54.08157735 ms, res = -25.68844536 ms, res = -57.56255737 ms, res = -58.33760538 ms, res = -53.89850439 ms, res = -12.72345340 ms, res = -58.76493841 ms, res = -58.16761442 ms, res = -53.71042343 ms, res = 3.47775944 ms, res = -59.66387045 ms, res = -57.99986746 ms, res = -53.51669147 ms, res = 16.92177848 ms, res = -60.31656049 ms, res = -57.83424150 ms, res = -53.31657651 ms, res = 24.30608952 ms, res = -60.77433353 ms, res = -57.67058754 ms, res = -53.10923855 ms, res = 26.77557756 ms, res = -61.07979257 ms, res = -57.50873658 ms, res = -52.89370459 ms, res = 26.14880560 ms, res = -61.26693061 ms, res = -57.34850462 ms, res = -52.66883663 ms, res = 23.55503564 ms, res = -61.36237465 ms, res = -57.18969866 ms, res = -52.43330067 ms, res = 19.63423968 ms, res = -61.38686369 ms, res = -57.03211370 ms, res = -52.18550871 ms, res = 14.80864972 ms, res = -61.35654573 ms, res = -56.87554274 ms, res = -51.92355675 ms, res = 9.40722176 ms, res = -61.28403177 ms, res = -56.71977178 ms, res = -51.64513879 ms, res = 3.70500680 ms, res = -61.17920781 ms, res = -56.56458282 ms, res = -51.34742683 ms, res = -2.07090384 ms, res = -61.04984485 ms, res = -56.40975486 ms, res = -51.02690987 ms, res = -7.74417788 ms, res = -60.90206589 ms, res = -56.25506190 ms, res = -50.67916691 ms, res = -13.18875492 ms, res = -60.74069993 ms, res = -56.10027394 ms, res = -50.29854395 ms, res = -18.31714596 ms, res = -60.56955797 ms, res = -55.94515698 ms, res = -49.87768499 ms, res = -23.063132
+
+Execution time: 130.398242 seconds.
+Task 4 Starting... 
+[1679941065.411340] [skl-a-03:32090:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fa997feefc0 was not matched
+Task 5 Starting... 
+[1679941065.420886] [skl-a-03:32091:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f699b5d2fc0 was not matched
+Task 7 Starting... 
+[1679941065.445954] [skl-a-05:18118:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f3aecdd1fc0 was not matched
+Task 9 Starting... 
+[1679941065.445400] [skl-a-05:18120:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f17bf5d2fc0 was not matched
+Task 6 Starting... 
+[1679941065.450614] [skl-a-05:18117:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f75077bcfc0 was not matched
+Task 8 Starting... 
+[1679941065.451300] [skl-a-05:18119:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f752d9ebfc0 was not matched
+Task 10 Starting... 
+[1679941065.460255] [skl-a-05:18121:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f1e5f1dafc0 was not matched
+Simulating 5 dendrites with 1000 compartments per dendrite.
+
+Data will be stored in data/p1d5c1000_032723_141747.dat
+Graph will be stored in graphs/p1d5c1000_032723_141747.png
+
+Integration step dt = 0.000100
+01 ms, res = -64.97182502 ms, res = -64.94874003 ms, res = -64.92852204 ms, res = -64.91040805 ms, res = -64.89384206 ms, res = -64.87816107 ms, res = -64.86250808 ms, res = -64.84592709 ms, res = -64.82750910 ms, res = -64.80649711 ms, res = -64.78234312 ms, res = -64.75471913 ms, res = -64.72349114 ms, res = -64.68868915 ms, res = -64.65046816 ms, res = -64.60907517 ms, res = -64.56481218 ms, res = -64.51801919 ms, res = -64.46904820 ms, res = -64.41825221 ms, res = -64.36597222 ms, res = -64.31253223 ms, res = -64.25823224 ms, res = -64.20334825 ms, res = -64.14812926 ms, res = -64.09279827 ms, res = -64.03755128 ms, res = -63.98256129 ms, res = -63.92797730 ms, res = -63.87392731 ms, res = -63.82052032 ms, res = -63.76784733 ms, res = -63.71598234 ms, res = -63.66498635 ms, res = -63.61490936 ms, res = -63.56578637 ms, res = -63.51764638 ms, res = -63.47050739 ms, res = -63.42438140 ms, res = -63.37927341 ms, res = -63.33518242 ms, res = -63.29210343 ms, res = -63.25002744 ms, res = -63.20894145 ms, res = -63.16883046 ms, res = -63.12967647 ms, res = -63.09146048 ms, res = -63.05416149 ms, res = -63.01775650 ms, res = -62.98222251 ms, res = -62.94753652 ms, res = -62.91367253 ms, res = -62.88060654 ms, res = -62.84831455 ms, res = -62.81677156 ms, res = -62.78595257 ms, res = -62.75583358 ms, res = -62.72638959 ms, res = -62.69759760 ms, res = -62.66943461 ms, res = -62.64187562 ms, res = -62.61490063 ms, res = -62.58848564 ms, res = -62.56261065 ms, res = -62.53725266 ms, res = -62.51239367 ms, res = -62.48801168 ms, res = -62.46408769 ms, res = -62.44060270 ms, res = -62.41753871 ms, res = -62.39487672 ms, res = -62.37260073 ms, res = -62.35069274 ms, res = -62.32913675 ms, res = -62.30791576 ms, res = -62.28701477 ms, res = -62.26641778 ms, res = -62.24611079 ms, res = -62.22607880 ms, res = -62.20630681 ms, res = -62.18678182 ms, res = -62.16749083 ms, res = -62.14841984 ms, res = -62.12955485 ms, res = -62.11088486 ms, res = -62.09239687 ms, res = -62.07407788 ms, res = -62.05591589 ms, res = -62.03789890 ms, res = -62.02001591 ms, res = -62.00225492 ms, res = -61.98460393 ms, res = -61.96705094 ms, res = -61.94958595 ms, res = -61.93219596 ms, res = -61.91487097 ms, res = -61.89759798 ms, res = -61.88036699 ms, res = -61.863165
+
+Execution time: 256.763119 seconds.
+Task 4 Starting... 
+[1679941323.834347] [skl-a-05:18552:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f32f87f6fc0 was not matched
+Task 5 Starting... 
+[1679941323.833762] [skl-a-05:18553:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f837afecfc0 was not matched
+Task 3 Starting... 
+[1679941323.836892] [skl-a-03:32491:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f7daebd3fc0 was not matched
+Task 2 Starting... 
+[1679941323.846143] [skl-a-03:32490:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f05659eafc0 was not matched
+Simulating 6 dendrites with 1000 compartments per dendrite.
+
+Data will be stored in data/p1d6c1000_032723_142205.dat
+Graph will be stored in graphs/p1d6c1000_032723_142205.png
+
+Integration step dt = 0.000100
+01 ms, res = -64.97288902 ms, res = -64.95128903 ms, res = -64.93265704 ms, res = -64.91614505 ms, res = -64.90114306 ms, res = -64.88691207 ms, res = -64.87249608 ms, res = -64.85683509 ms, res = -64.83892810 ms, res = -64.81796011 ms, res = -64.79335712 ms, res = -64.76479113 ms, res = -64.73215414 ms, res = -64.69552115 ms, res = -64.65509816 ms, res = -64.61119117 ms, res = -64.56416218 ms, res = -64.51440919 ms, res = -64.46233920 ms, res = -64.40835521 ms, res = -64.35284222 ms, res = -64.29616423 ms, res = -64.23865524 ms, res = -64.18062025 ms, res = -64.12233226 ms, res = -64.06403427 ms, res = -64.00593828 ms, res = -63.94823029 ms, res = -63.89106830 ms, res = -63.83458931 ms, res = -63.77890432 ms, res = -63.72411033 ms, res = -63.67028134 ms, res = -63.61748135 ms, res = -63.56575636 ms, res = -63.51514237 ms, res = -63.46566438 ms, res = -63.41733839 ms, res = -63.37017440 ms, res = -63.32417241 ms, res = -63.27932842 ms, res = -63.23563443 ms, res = -63.19307644 ms, res = -63.15163845 ms, res = -63.11130146 ms, res = -63.07204447 ms, res = -63.03384248 ms, res = -62.99667349 ms, res = -62.96050950 ms, res = -62.92532451 ms, res = -62.89109252 ms, res = -62.85778553 ms, res = -62.82537554 ms, res = -62.79383655 ms, res = -62.76313956 ms, res = -62.73325857 ms, res = -62.70416658 ms, res = -62.67583759 ms, res = -62.64824560 ms, res = -62.62136561 ms, res = -62.59517362 ms, res = -62.56964463 ms, res = -62.54475664 ms, res = -62.52048565 ms, res = -62.49680966 ms, res = -62.47370767 ms, res = -62.45115968 ms, res = -62.42914469 ms, res = -62.40764270 ms, res = -62.38663671 ms, res = -62.36610672 ms, res = -62.34603573 ms, res = -62.32640774 ms, res = -62.30720475 ms, res = -62.28841276 ms, res = -62.27001477 ms, res = -62.25199678 ms, res = -62.23434479 ms, res = -62.21704480 ms, res = -62.20008281 ms, res = -62.18344782 ms, res = -62.16712583 ms, res = -62.15110584 ms, res = -62.13537585 ms, res = -62.11992486 ms, res = -62.10474187 ms, res = -62.08981688 ms, res = -62.07513989 ms, res = -62.06070190 ms, res = -62.04649191 ms, res = -62.03250192 ms, res = -62.01872293 ms, res = -62.00514694 ms, res = -61.99176495 ms, res = -61.97856996 ms, res = -61.96555397 ms, res = -61.95270898 ms, res = -61.94002699 ms, res = -61.927502
+
+Execution time: 493.202529 seconds.
+Task 5 Starting... 
+[1679941818.557349] [skl-a-05:19311:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f155f4fefc0 was not matched
+Task 4 Starting... 
+[1679941818.558575] [skl-a-05:19310:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fe818c44fc0 was not matched
+Task 2 Starting... 
+[1679941818.574001] [skl-a-03:33249:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fece4ffdfc0 was not matched
+Task 3 Starting... 
+[1679941818.575200] [skl-a-03:33250:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fc64b853fc0 was not matched
+Simulating 7 dendrites with 1000 compartments per dendrite.
+
+Data will be stored in data/p1d7c1000_032723_143020.dat
+Graph will be stored in graphs/p1d7c1000_032723_143020.png
+
+Integration step dt = 0.000100
+01 ms, res = -64.97388202 ms, res = -64.95361403 ms, res = -64.93637004 ms, res = -64.92123405 ms, res = -64.90755406 ms, res = -64.89452407 ms, res = -64.88110508 ms, res = -64.86614709 ms, res = -64.84857710 ms, res = -64.82753211 ms, res = -64.80242312 ms, res = -64.77292913 ms, res = -64.73897414 ms, res = -64.70067215 ms, res = -64.65828316 ms, res = -64.61216517 ms, res = -64.56273418 ms, res = -64.51044019 ms, res = -64.45573620 ms, res = -64.39906721 ms, res = -64.34085922 ms, res = -64.28150623 ms, res = -64.22137024 ms, res = -64.16078025 ms, res = -64.10002626 ms, res = -64.03936827 ms, res = -63.97903028 ms, res = -63.91920529 ms, res = -63.86006130 ms, res = -63.80173631 ms, res = -63.74434632 ms, res = -63.68798933 ms, res = -63.63273934 ms, res = -63.57865835 ms, res = -63.52579236 ms, res = -63.47417437 ms, res = -63.42382738 ms, res = -63.37476339 ms, res = -63.32698740 ms, res = -63.28049841 ms, res = -63.23528742 ms, res = -63.19134343 ms, res = -63.14864744 ms, res = -63.10718045 ms, res = -63.06691946 ms, res = -63.02783847 ms, res = -62.98991148 ms, res = -62.95311149 ms, res = -62.91740650 ms, res = -62.88276951 ms, res = -62.84916852 ms, res = -62.81657453 ms, res = -62.78495654 ms, res = -62.75428455 ms, res = -62.72452856 ms, res = -62.69565857 ms, res = -62.66764658 ms, res = -62.64046359 ms, res = -62.61408260 ms, res = -62.58847561 ms, res = -62.56361662 ms, res = -62.53947963 ms, res = -62.51603864 ms, res = -62.49327165 ms, res = -62.47115366 ms, res = -62.44966267 ms, res = -62.42877668 ms, res = -62.40847369 ms, res = -62.38873270 ms, res = -62.36953571 ms, res = -62.35086272 ms, res = -62.33269473 ms, res = -62.31501474 ms, res = -62.29780475 ms, res = -62.28104976 ms, res = -62.26473177 ms, res = -62.24883778 ms, res = -62.23335179 ms, res = -62.21825980 ms, res = -62.20354881 ms, res = -62.18920482 ms, res = -62.17521483 ms, res = -62.16156784 ms, res = -62.14825185 ms, res = -62.13525586 ms, res = -62.12256887 ms, res = -62.11017988 ms, res = -62.09807989 ms, res = -62.08625890 ms, res = -62.07470791 ms, res = -62.06341692 ms, res = -62.05237793 ms, res = -62.04158394 ms, res = -62.03102595 ms, res = -62.02069596 ms, res = -62.01058697 ms, res = -62.00069198 ms, res = -61.99100499 ms, res = -61.981517
+
+Execution time: 497.609250 seconds.
+Task 4 Starting... 
+[1679942317.743799] [skl-a-05:20721:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fb7f10e8fc0 was not matched
+Task 2 Starting... 
+[1679942317.745256] [skl-a-03:34644:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f0770f88fc0 was not matched
+Task 5 Starting... 
+[1679942317.745010] [skl-a-05:20722:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f65dd24efc0 was not matched
+Task 3 Starting... 
+[1679942317.755073] [skl-a-03:34645:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fa2399ebfc0 was not matched
+Simulating 1499 dendrites with 10 compartments per dendrite.
+
+Data will be stored in data/p1d1499c10_032723_143839.dat
+Graph will be stored in graphs/p1d1499c10_032723_143839.png
+
+Integration step dt = 0.000100
+01 ms, res = 36.75775102 ms, res = -23.96161503 ms, res = -27.23952004 ms, res = -21.68859905 ms, res = -23.52966406 ms, res = -23.32820207 ms, res = -23.21647108 ms, res = -23.27685109 ms, res = -23.26455810 ms, res = -23.26330011 ms, res = -23.26496912 ms, res = -23.26445813 ms, res = -23.26448914 ms, res = -23.26452715 ms, res = -23.26451016 ms, res = -23.26451317 ms, res = -23.26451318 ms, res = -23.26451319 ms, res = -23.26451320 ms, res = -23.26451321 ms, res = -23.26451322 ms, res = -23.26451323 ms, res = -23.26451324 ms, res = -23.26451325 ms, res = -23.26451326 ms, res = -23.26451327 ms, res = -23.26451328 ms, res = -23.26451329 ms, res = -23.26451330 ms, res = -23.26451331 ms, res = -23.26451332 ms, res = -23.26451333 ms, res = -23.26451334 ms, res = -23.26451335 ms, res = -23.26451336 ms, res = -23.26451337 ms, res = -23.26451338 ms, res = -23.26451339 ms, res = -23.26451340 ms, res = -23.26451341 ms, res = -23.26451342 ms, res = -23.26451343 ms, res = -23.26451344 ms, res = -23.26451345 ms, res = -23.26451346 ms, res = -23.26451347 ms, res = -23.26451348 ms, res = -23.26451349 ms, res = -23.26451350 ms, res = -23.26451351 ms, res = -23.26451352 ms, res = -23.26451353 ms, res = -23.26451354 ms, res = -23.26451355 ms, res = -23.26451356 ms, res = -23.26451357 ms, res = -23.26451358 ms, res = -23.26451359 ms, res = -23.26451360 ms, res = -23.26451361 ms, res = -23.26451362 ms, res = -23.26451363 ms, res = -23.26451364 ms, res = -23.26451365 ms, res = -23.26451366 ms, res = -23.26451367 ms, res = -23.26451368 ms, res = -23.26451369 ms, res = -23.26451370 ms, res = -23.26451371 ms, res = -23.26451372 ms, res = -23.26451373 ms, res = -23.26451374 ms, res = -23.26451375 ms, res = -23.26451376 ms, res = -23.26451377 ms, res = -23.26451378 ms, res = -23.26451379 ms, res = -23.26451380 ms, res = -23.26451381 ms, res = -23.26451382 ms, res = -23.26451383 ms, res = -23.26451384 ms, res = -23.26451385 ms, res = -23.26451386 ms, res = -23.26451387 ms, res = -23.26451388 ms, res = -23.26451389 ms, res = -23.26451390 ms, res = -23.26451391 ms, res = -23.26451392 ms, res = -23.26451393 ms, res = -23.26451394 ms, res = -23.26451395 ms, res = -23.26451396 ms, res = -23.26451397 ms, res = -23.26451398 ms, res = -23.26451399 ms, res = -23.264513
+
+Execution time: 1031.686791 seconds.
+Task 5 Starting... 
+[1679943351.023385] [skl-a-05:22141:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f92e4821fc0 was not matched
+Task 4 Starting... 
+[1679943351.022713] [skl-a-05:22140:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f1036febfc0 was not matched
+Task 3 Starting... 
+[1679943351.023877] [skl-a-03:36026:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f716d9ebfc0 was not matched
+Task 2 Starting... 
+[1679943351.034568] [skl-a-03:36025:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f57f3de4fc0 was not matched
+Simulating 1500 dendrites with 10 compartments per dendrite.
+
+Data will be stored in data/p1d1500c10_032723_145552.dat
+Graph will be stored in graphs/p1d1500c10_032723_145552.png
+
+Integration step dt = 0.000100
+01 ms, res = 36.75335902 ms, res = -23.93589503 ms, res = -27.23592604 ms, res = -21.68257805 ms, res = -23.51972106 ms, res = -23.32081407 ms, res = -23.20848408 ms, res = -23.26877709 ms, res = -23.25660410 ms, res = -23.25530611 ms, res = -23.25697812 ms, res = -23.25647013 ms, res = -23.25649914 ms, res = -23.25653815 ms, res = -23.25652016 ms, res = -23.25652317 ms, res = -23.25652418 ms, res = -23.25652319 ms, res = -23.25652320 ms, res = -23.25652321 ms, res = -23.25652322 ms, res = -23.25652323 ms, res = -23.25652324 ms, res = -23.25652325 ms, res = -23.25652326 ms, res = -23.25652327 ms, res = -23.25652328 ms, res = -23.25652329 ms, res = -23.25652330 ms, res = -23.25652331 ms, res = -23.25652332 ms, res = -23.25652333 ms, res = -23.25652334 ms, res = -23.25652335 ms, res = -23.25652336 ms, res = -23.25652337 ms, res = -23.25652338 ms, res = -23.25652339 ms, res = -23.25652340 ms, res = -23.25652341 ms, res = -23.25652342 ms, res = -23.25652343 ms, res = -23.25652344 ms, res = -23.25652345 ms, res = -23.25652346 ms, res = -23.25652347 ms, res = -23.25652348 ms, res = -23.25652349 ms, res = -23.25652350 ms, res = -23.25652351 ms, res = -23.25652352 ms, res = -23.25652353 ms, res = -23.25652354 ms, res = -23.25652355 ms, res = -23.25652356 ms, res = -23.25652357 ms, res = -23.25652358 ms, res = -23.25652359 ms, res = -23.25652360 ms, res = -23.25652361 ms, res = -23.25652362 ms, res = -23.25652363 ms, res = -23.25652364 ms, res = -23.25652365 ms, res = -23.25652366 ms, res = -23.25652367 ms, res = -23.25652368 ms, res = -23.25652369 ms, res = -23.25652370 ms, res = -23.25652371 ms, res = -23.25652372 ms, res = -23.25652373 ms, res = -23.25652374 ms, res = -23.25652375 ms, res = -23.25652376 ms, res = -23.25652377 ms, res = -23.25652378 ms, res = -23.25652379 ms, res = -23.25652380 ms, res = -23.25652381 ms, res = -23.25652382 ms, res = -23.25652383 ms, res = -23.25652384 ms, res = -23.25652385 ms, res = -23.25652386 ms, res = -23.25652387 ms, res = -23.25652388 ms, res = -23.25652389 ms, res = -23.25652390 ms, res = -23.25652391 ms, res = -23.25652392 ms, res = -23.25652393 ms, res = -23.25652394 ms, res = -23.25652395 ms, res = -23.25652396 ms, res = -23.25652397 ms, res = -23.25652398 ms, res = -23.25652399 ms, res = -23.256523
+
+Execution time: 1070.999639 seconds.
+Task 5 Starting... 
+[1679944423.582123] [skl-a-05:25062:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f00c500dfc0 was not matched
+Task 4 Starting... 
+[1679944423.581585] [skl-a-05:25061:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f33348b2fc0 was not matched
+Task 2 Starting... 
+[1679944423.597221] [skl-a-03:2545 :0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7ff588dd0fc0 was not matched
+Task 3 Starting... 
+[1679944423.597801] [skl-a-03:2546 :0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f89c2fecfc0 was not matched
+Simulating 1501 dendrites with 10 compartments per dendrite.
+
+Data will be stored in data/p1d1501c10_032723_151345.dat
+Graph will be stored in graphs/p1d1501c10_032723_151345.png
+
+Integration step dt = 0.000100
+01 ms, res = 36.74896002 ms, res = -23.91017603 ms, res = -27.23232104 ms, res = -21.67656305 ms, res = -23.50977806 ms, res = -23.31342307 ms, res = -23.20049908 ms, res = -23.26070309 ms, res = -23.24865010 ms, res = -23.24731111 ms, res = -23.24898512 ms, res = -23.24848213 ms, res = -23.24850914 ms, res = -23.24854815 ms, res = -23.24853116 ms, res = -23.24853317 ms, res = -23.24853418 ms, res = -23.24853319 ms, res = -23.24853420 ms, res = -23.24853421 ms, res = -23.24853422 ms, res = -23.24853423 ms, res = -23.24853424 ms, res = -23.24853425 ms, res = -23.24853426 ms, res = -23.24853427 ms, res = -23.24853428 ms, res = -23.24853429 ms, res = -23.24853430 ms, res = -23.24853431 ms, res = -23.24853432 ms, res = -23.24853433 ms, res = -23.24853434 ms, res = -23.24853435 ms, res = -23.24853436 ms, res = -23.24853437 ms, res = -23.24853438 ms, res = -23.24853439 ms, res = -23.24853440 ms, res = -23.24853441 ms, res = -23.24853442 ms, res = -23.24853443 ms, res = -23.24853444 ms, res = -23.24853445 ms, res = -23.24853446 ms, res = -23.24853447 ms, res = -23.24853448 ms, res = -23.24853449 ms, res = -23.24853450 ms, res = -23.24853451 ms, res = -23.24853452 ms, res = -23.24853453 ms, res = -23.24853454 ms, res = -23.24853455 ms, res = -23.24853456 ms, res = -23.24853457 ms, res = -23.24853458 ms, res = -23.24853459 ms, res = -23.24853460 ms, res = -23.24853461 ms, res = -23.24853462 ms, res = -23.24853463 ms, res = -23.24853464 ms, res = -23.24853465 ms, res = -23.24853466 ms, res = -23.24853467 ms, res = -23.24853468 ms, res = -23.24853469 ms, res = -23.24853470 ms, res = -23.24853471 ms, res = -23.24853472 ms, res = -23.24853473 ms, res = -23.24853474 ms, res = -23.24853475 ms, res = -23.24853476 ms, res = -23.24853477 ms, res = -23.24853478 ms, res = -23.24853479 ms, res = -23.24853480 ms, res = -23.24853481 ms, res = -23.24853482 ms, res = -23.24853483 ms, res = -23.24853484 ms, res = -23.24853485 ms, res = -23.24853486 ms, rTask 4 Starting... 
+[1679945519.426003] [skl-a-05:29118:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7ff3c3bd5fc0 was not matched
+Task 2 Starting... 
+[1679945519.425692] [skl-a-03:6101 :0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7fe7a11e9fc0 was not matched
+Task 5 Starting... 
+[1679945519.426685] [skl-a-05:29119:0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f32cd416fc0 was not matched
+Task 3 Starting... 
+[1679945519.435829] [skl-a-03:6102 :0]       tag_match.c:61   UCX  WARN  unexpected tag-receive descriptor 0x7f22251eafc0 was not matched
+es = -23.24853487 ms, res = -23.24853488 ms, res = -23.24853489 ms, res = -23.24853490 ms, res = -23.24853491 ms, res = -23.24853492 ms, res = -23.24853493 ms, res = -23.24853494 ms, res = -23.24853495 ms, res = -23.24853496 ms, res = -23.24853497 ms, res = -23.24853498 ms, res = -23.24853499 ms, res = -23.248534
+
+Execution time: 1094.195786 seconds.
