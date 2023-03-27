@@ -47,8 +47,13 @@
 int main(int argc, char **argv) {
   CmdArgs cmd_args;                        // Command line arguments.
   int num_comps, num_dendrs, r_num_dendrs; // Simulation parameters.
-  int i, j, t_ms, step, dendrite;          // Various indexing variables.
+  int i, j, n, t_ms, step, dendrite;          // Various indexing variables.
   struct timeval start, stop, diff;        // Values used to measure time.
+  int num_processes, rank;                 // MPI Variables
+
+  // other interesting vars
+  int rc; // return code
+  int receives = 0;
 
   double exec_time; // How long we take.
 
@@ -73,9 +78,6 @@ int main(int argc, char **argv) {
   // Initalize MPI  (ADDED IN - EDIT HERE)
   //////////////////////////////////////////////////////////////////////////////
 
-  /* ********** MPI Variables ********** */
-  int numtasks, rank, rc, receives = 0;
-  int n; // indexing
   MPI_Status status;
 
   // Initalize MPI
@@ -88,10 +90,10 @@ int main(int argc, char **argv) {
 
   // Get rank and number of tasks
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
+  MPI_Comm_size(MPI_COMM_WORLD, &num_processes);
 
   // Make sure we have atleas the minimum amount of tasks needed (6)
-  if (numtasks < 6) {
+  if (num_processes < 6) {
     if (rank == 0) {
       printf("Unable to start necessary amount of MPI tasks!\n");
       MPI_Abort(MPI_COMM_WORLD, rc);
@@ -136,9 +138,9 @@ int main(int argc, char **argv) {
     // where 'WW' is the number of processes, 'XX' is the number of dendrites,
     // 'YY' the number of compartments, and 'MoDaYe...' the time at which this
     // simulation was run.
-    sprintf(graph_fname, "graphs/p1d%dc%d_%s.png", num_dendrs, num_comps,
+    sprintf(graph_fname, "graphs/p%dd%dc%d_%s.png", num_processes, num_dendrs, num_comps,
             time_str);
-    sprintf(data_fname, "data/p1d%dc%d_%s.dat", num_dendrs, num_comps,
+    sprintf(data_fname, "data/p%dd%dc%d_%s.dat", num_processes, num_dendrs, num_comps,
             time_str);
 
     // Verify that the graphs/ and data/ directories exist. Create them if they
@@ -218,13 +220,13 @@ int main(int argc, char **argv) {
 
   if (rank > 0) {
     // Update num dendrites to be split among tasks
-    r_num_dendrs = num_dendrs % (numtasks - 1);
-    num_dendrs = num_dendrs / (numtasks - 1);
+    r_num_dendrs = num_dendrs % (num_processes - 1);
+    num_dendrs = num_dendrs / (num_processes - 1);
     // Handle remainder
     if (r_num_dendrs > 0) {
       int cur_task = 1;
       for (n = 0; n < r_num_dendrs; n++) {
-        if (cur_task > numtasks) {
+        if (cur_task > num_processes) {
           cur_task = 1;
         }
         if (rank == cur_task) {
@@ -239,7 +241,7 @@ int main(int argc, char **argv) {
     // Record the initial potential value in our results array. #1
     res[0] = y[0];
     // send initalial starting y values
-    for (int i = 1; i <= (numtasks - 1); i++) {
+    for (int i = 1; i <= (num_processes - 1); i++) {
       MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
     }
   }
@@ -277,7 +279,7 @@ int main(int argc, char **argv) {
         temp_soma[1] = 0.0;
         temp_soma[2] = 0.0;
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
-        while (receives != (numtasks - 1)) {
+        while (receives != (num_processes - 1)) {
           MPI_Recv(temp_soma, 3, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG,
                    MPI_COMM_WORLD, &status);
           soma_params[2] += temp_soma[2];
@@ -299,7 +301,7 @@ int main(int argc, char **argv) {
         rk4Step(y, y0, dydt, NUMVAR, soma_params, 1, soma);
 
         // Send updated y value to all
-        for (int i = 1; i <= (numtasks - 1); i++) {
+        for (int i = 1; i <= (num_processes - 1); i++) {
           MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
         }
       }
@@ -333,7 +335,7 @@ int main(int argc, char **argv) {
             "Compartments: %d, Dendrites: %d, Execution time: %f s, "
             "Slave processes: %d\n",
             COMPTIME, soma_params[0], num_comps - 2, num_dendrs, exec_time,
-            numtasks);
+            num_processes);
     fprintf(data_file, "# X Y\n");
 
     for (t_ms = 0; t_ms < COMPTIME; t_ms++) {
