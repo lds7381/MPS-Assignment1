@@ -233,7 +233,6 @@ int main(int argc, char **argv) {
         cur_task++;
       }
     }
-    printf("%d rank doing %d dendrites\n", rank, num_dendrs);
   }
 
   if (rank == 0) {
@@ -279,7 +278,7 @@ int main(int argc, char **argv) {
         temp_soma[2] = 0.0;
         // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
         while (receives != (numtasks - 1)) {
-          MPI_Recv(temp_soma, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG,
+          MPI_Recv(temp_soma, 3, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG,
                    MPI_COMM_WORLD, &status);
           soma_params[2] += temp_soma[2];
           temp_soma[2] = 0.0;
