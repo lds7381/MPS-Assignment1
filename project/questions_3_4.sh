@@ -30,7 +30,7 @@
 # Multiple options can be used on the same line as shown below.
 # Here, we set the partition and the number of cores to use,
 # and specify the amount of memory we would like per core.
-#SBATCH -p kgcoe-mps -n 10
+#SBATCH -p kgcoe-mps -n 11
 #SBATCH --mem-per-cpu 1G
 
 #
@@ -51,9 +51,9 @@ spack load --first openmpi
 # have used. Using $SLURM_NPROCS guarantees a match.
 
 # Question Set 3
-srun -n 10 mpi_hh -d 30 -c 100
-srun -n 10 mpi_hh -d 33 -c 100
-srun -n 10 mpi_hh -d 36 -c 100
+srun -n 11 mpi_hh -d 30 -c 100
+srun -n 11 mpi_hh -d 33 -c 100
+srun -n 11 mpi_hh -d 36 -c 100
 
 # Question Set 4 
 srun -n 6 mpi_hh -d 5 -c 1000
