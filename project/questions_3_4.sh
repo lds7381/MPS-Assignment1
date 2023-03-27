@@ -30,7 +30,7 @@
 # Multiple options can be used on the same line as shown below.
 # Here, we set the partition and the number of cores to use,
 # and specify the amount of memory we would like per core.
-#SBATCH -p kgcoe-mps -n 6
+#SBATCH -p kgcoe-mps -n 10
 #SBATCH --mem-per-cpu 1G
 
 #
