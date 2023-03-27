@@ -18,6 +18,11 @@
 #include <sys/time.h>
 #include <time.h>
 
+// Define MPI tags for communication
+#define TAG_ASSIGN_DENDRITE   1
+#define TAG_DENDRITE_CURRENT  2
+#define TAG_SOMA_POTENTIAL    3
+
 // Define macros based on compilation options. This is a best practice that
 // ensures that all code is seen by the compiler so there will be no surprises
 // when a flag is/isn't defined. Any modern compiler will compile out any
@@ -46,23 +51,18 @@
  */
 int main(int argc, char **argv) {
   CmdArgs cmd_args;                        // Command line arguments.
-  int num_comps, num_dendrs, r_num_dendrs; // Simulation parameters.
-  int i, j, n, t_ms, step, dendrite;          // Various indexing variables.
+  int num_comps, num_dendrs; // Simulation parameters.
+  int i, j, t_ms, step, dendrite;          // Various indexing variables.
   struct timeval start, stop, diff;        // Values used to measure time.
   int num_processes, rank;                 // MPI Variables
-
-  // other interesting vars
-  int rc; // return code
-  int receives = 0;
-
-  double exec_time; // How long we take.
+  int rc;                                  // return code
+  double exec_time;                        // How long we take.
 
   // Accumulators used during dendrite simulation.
   // NOTE: We depend on the compiler to handle the use of double[] variables as
   //       double*.
   double current, **dendr_volt;
   double res[COMPTIME], y[NUMVAR], y0[NUMVAR], dydt[NUMVAR], soma_params[3];
-  double temp_soma[3];
 
   // Strings used to store filenames for the graph and data files.
   char time_str[14];
@@ -77,33 +77,17 @@ int main(int argc, char **argv) {
   //////////////////////////////////////////////////////////////////////////////
   // Initalize MPI  (ADDED IN - EDIT HERE)
   //////////////////////////////////////////////////////////////////////////////
-
-  MPI_Status status;
-
-  // Initalize MPI
+  MPI_Status mpi_status;
   rc = MPI_Init(&argc, &argv);
   // Check if successful
   if (rc != MPI_SUCCESS) {
     fprintf(stderr, "Error starting MPI.\n");
     MPI_Abort(MPI_COMM_WORLD, rc);
   }
-
   // Get rank and number of tasks
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_processes);
 
-  // Make sure we have atleas the minimum amount of tasks needed (6)
-  if (num_processes < 6) {
-    if (rank == 0) {
-      printf("Unable to start necessary amount of MPI tasks!\n");
-      MPI_Abort(MPI_COMM_WORLD, rc);
-      return 0;
-    }
-  } else {
-    if (rank > 0) {
-      printf("Task %d Starting... \n", rank);
-    }
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Parse command line arguments.
@@ -176,6 +160,35 @@ int main(int argc, char **argv) {
   }
 
   //////////////////////////////////////////////////////////////////////////////
+  // Assign all dendrites amongst processes
+  //////////////////////////////////////////////////////////////////////////////
+  int process_dendrites, dendrites_assigned = 0;
+  int dendrites_remaining;
+  
+  // master process assigns dendrites to slave processes
+  if (rank == 0) {
+    process_dendrites = num_dendrs / num_processes;
+    dendrites_remaining = num_dendrs % num_processes;
+
+    if (dendrites_remaining){
+      process_dendrites++;
+    }
+    // assign dendrites to slave processes
+    for (i = 1; i < num_processes; i++){
+      dendrites_assigned = num_dendrs / num_processes;
+      // distribute remaining dendrites
+      if (i < dendrites_remaining){
+        dendrites_assigned++;
+      }
+      MPI_Send(&dendrites_assigned, 1, MPI_INT, i, TAG_ASSIGN_DENDRITE, MPI_COMM_WORLD);
+    }
+  } else {
+    // slave processes receive dendrite assignment
+    MPI_Recv(&process_dendrites, 1, MPI_INT, 0, TAG_ASSIGN_DENDRITE, MPI_COMM_WORLD, &mpi_status);
+  }
+  
+
+  //////////////////////////////////////////////////////////////////////////////
   // Initialize simulation parameters.
   //////////////////////////////////////////////////////////////////////////////
 
@@ -201,16 +214,13 @@ int main(int argc, char **argv) {
     gettimeofday(&start, NULL);
   }
 
-  if (rank != 0) {
 
-    // Initialize the potential of each dendrite compartment to the rest
-    // voltage.
-    dendr_volt = (double **)malloc(num_dendrs * sizeof(double *));
-    for (i = 0; i < num_dendrs; i++) {
-      dendr_volt[i] = (double *)malloc(num_comps * sizeof(double));
-      for (j = 0; j < num_comps; j++) {
-        dendr_volt[i][j] = VREST;
-      }
+  // Initialize the potential of each dendrite compartment to the rest voltage.
+  dendr_volt = (double **)malloc(process_dendrites * sizeof(double *));
+  for (i = 0; i < process_dendrites; i++) {
+    dendr_volt[i] = (double *)malloc(num_comps * sizeof(double));
+    for (j = 0; j < num_comps; j++) {
+      dendr_volt[i][j] = VREST;
     }
   }
 
@@ -218,33 +228,14 @@ int main(int argc, char **argv) {
   // Main computation.
   //////////////////////////////////////////////////////////////////////////////
 
-  if (rank > 0) {
-    // Update num dendrites to be split among tasks
-    r_num_dendrs = num_dendrs % (num_processes - 1);
-    num_dendrs = num_dendrs / (num_processes - 1);
-    // Handle remainder
-    if (r_num_dendrs > 0) {
-      int cur_task = 1;
-      for (n = 0; n < r_num_dendrs; n++) {
-        if (cur_task > num_processes) {
-          cur_task = 1;
-        }
-        if (rank == cur_task) {
-          num_dendrs++;
-        }
-        cur_task++;
-      }
-    }
-  }
+  double current_buffer = 0.0;
+  // Record the initial potential value in our results array. #1
+  res[0] = y[0];
 
-  if (rank == 0) {
-    // Record the initial potential value in our results array. #1
-    res[0] = y[0];
-    // send initalial starting y values
-    for (int i = 1; i <= (num_processes - 1); i++) {
-      MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
-    }
-  }
+  // // send initial starting y values
+  // for (int i = 1; i <= (num_processes - 1); i++) {
+  //   MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
+  // }
 
   // Loop over milliseconds.
   for (t_ms = 1; t_ms < COMPTIME; t_ms++) {
@@ -254,65 +245,57 @@ int main(int argc, char **argv) {
       soma_params[2] = 0.0;
 
       // ********* DENDRITE *********
-
       // Loop over all the dendrites. #3 (Start MPI Break up here)
-      if (rank != 0) {
+      for (dendrite = 0; dendrite < process_dendrites; dendrite++) {
+        // This will update Vm in all compartments and will give a new
+        // injected current value from last compartment into the soma.
+        current = dendriteStep(dendr_volt[dendrite], step + dendrite + 1,
+                                num_comps, soma_params[0], y[0]);
+        // Accumulate the current generated by the dendrite.
+        soma_params[2] += current;
+      }
 
-        // receive previous y values (if past first step)
-        MPI_Recv(y, 4, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-
-        for (dendrite = 0; dendrite < num_dendrs; dendrite++) {
-          // This will update Vm in all compartments and will give a new
-          // injected current value from last compartment into the soma.
-          current = dendriteStep(dendr_volt[dendrite], step + dendrite + 1,
-                                 num_comps, soma_params[0], y[0]);
-          // Accumulate the current generated by the dendrite.
-          soma_params[2] += current;
+      if (rank == 0) { // master process
+        for (i = 1; i < num_processes; i++) {
+          // receive current from each slave process
+          MPI_Recv(&current_buffer, 1, MPI_DOUBLE, i, TAG_DENDRITE_CURRENT, MPI_COMM_WORLD, &mpi_status);
+          // accumulate current from each slave process
+          soma_params[2] += current_buffer;
         }
+      } else { // slave processes
+        // send current to master process
+        MPI_Send(&soma_params[2], 1, MPI_DOUBLE, 0, TAG_DENDRITE_CURRENT, MPI_COMM_WORLD);
+      }
 
-        // Send Soma Params and y to SOMA Master
-        MPI_Send(soma_params, 3, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
+      // Store previous HH model parameters.
+      y0[0] = y[0];
+      y0[1] = y[1];
+      y0[2] = y[2];
+      y0[3] = y[3];
 
-      } else {
-        receives = 0;
-        temp_soma[0] = 0.0;
-        temp_soma[1] = 0.0;
-        temp_soma[2] = 0.0;
-        // Receive Soma Params (BLOCKING UNTIL RECIEVE FROM EACH SOURCE)
-        while (receives != (num_processes - 1)) {
-          MPI_Recv(temp_soma, 3, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG,
-                   MPI_COMM_WORLD, &status);
-          soma_params[2] += temp_soma[2];
-          temp_soma[2] = 0.0;
-          receives++;
-        }
-
-        // Store previous HH model parameters.
-        y0[0] = y[0];
-        y0[1] = y[1];
-        y0[2] = y[2];
-        y0[3] = y[3];
-
-        // ********* SOMA *********
-
-        // This is the main HH computation. It updates the potential, Vm, of the
-        // soma, injects current, and calculates action potential. Good stuff.
+      // This is the main HH computation. It updates the potential, Vm, of the
+      // soma, injects current, and calculates action potential. Good stuff.
+      // calculated only by master process
+      if (rank == 0){
         soma(dydt, y, soma_params);
         rk4Step(y, y0, dydt, NUMVAR, soma_params, 1, soma);
 
-        // Send updated y value to all
-        for (int i = 1; i <= (num_processes - 1); i++) {
-          MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
+        // Send updated soma potential value to slave processes
+        for (i = 1; i < num_processes; i++) {
+          MPI_Send(&y[0], 1, MPI_DOUBLE, i, TAG_SOMA_POTENTIAL, MPI_COMM_WORLD);
         }
+      } else { // slave processes
+        // receive updated soma potential value from master process
+        MPI_Recv(&y[0], 1, MPI_DOUBLE, 0, TAG_SOMA_POTENTIAL, MPI_COMM_WORLD, &mpi_status);
       }
     }
+      
 
     if (rank == 0) {
       // Record the membrane potential of the soma at this simulation step.
       // Let's show where we are in terms of computation.
-      printf("\r%02d ms, res = %f", t_ms, y[0]);
+      printf("\r%02d ms", t_ms);
       fflush(stdout);
-
       res[t_ms] = y[0];
     }
   }
@@ -370,7 +353,7 @@ int main(int argc, char **argv) {
   // Free up allocated memory.
   //////////////////////////////////////////////////////////////////////////////
 
-  for (i = 0; i < num_dendrs; i++) {
+  for (i = 0; i < process_dendrites; i++) {
     free(dendr_volt[i]);
   }
   free(dendr_volt);
