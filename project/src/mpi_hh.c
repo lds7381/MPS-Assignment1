@@ -232,11 +232,6 @@ int main(int argc, char **argv) {
   // Record the initial potential value in our results array. #1
   res[0] = y[0];
 
-  // // send initial starting y values
-  // for (int i = 1; i <= (num_processes - 1); i++) {
-  //   MPI_Send(y, 4, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
-  // }
-
   // Loop over milliseconds.
   for (t_ms = 1; t_ms < COMPTIME; t_ms++) {
 
@@ -290,7 +285,6 @@ int main(int argc, char **argv) {
       }
     }
       
-
     if (rank == 0) {
       // Record the membrane potential of the soma at this simulation step.
       // Let's show where we are in terms of computation.
@@ -318,7 +312,7 @@ int main(int argc, char **argv) {
             "Compartments: %d, Dendrites: %d, Execution time: %f s, "
             "Slave processes: %d\n",
             COMPTIME, soma_params[0], num_comps - 2, num_dendrs, exec_time,
-            num_processes);
+            num_processes - 1);
     fprintf(data_file, "# X Y\n");
 
     for (t_ms = 0; t_ms < COMPTIME; t_ms++) {
@@ -334,10 +328,10 @@ int main(int argc, char **argv) {
     if (ISDEF_PLOT_PNG || ISDEF_PLOT_SCREEN) {
       pinfo.sim_time = COMPTIME;
       pinfo.int_step = soma_params[0];
-      pinfo.num_comps = num_comps - 2;
+      pinfo.num_comps = num_comps - 2; // -2 for soma and axon
       pinfo.num_dendrs = num_dendrs;
       pinfo.exec_time = exec_time;
-      pinfo.slaves = 0;
+      pinfo.slaves = num_processes -1; // master process is not a slave
     }
 
     if (ISDEF_PLOT_PNG) {
