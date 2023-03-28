@@ -1,4 +1,5 @@
 #!/bin/bash
-sbatch qs2_seq.sh
-sbatch qs2_6.sh
-sbatch qs2_13.sh
+# queues all the jobs for question set 1
+sbatch qs1_seq.sh
+sbatch qs1_6.sh
+sbatch qs1_13.sh
