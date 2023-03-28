@@ -10,7 +10,7 @@
 # that information here, rather than the command line.
 
 # Name of the job - You MUST use a unique name for the job
-#SBATCH -J qs2_13
+#SBATCH -J qs2_seq
 
 # Standard out and Standard Error output files
 # Each job should have a unique file name; otherwise, all of the
@@ -20,9 +20,9 @@
 #SBATCH -e %x-%j.err
 
 # Multiple options can be used on the same line as shown below.
-# Here, we set the partition and number of cores to use,
+# Here, we set the partition to use,
 # and specify the amount of memory we would like per core.
-#SBATCH -p kgcoe-mps -n 13
+#SBATCH -p kgcoe-mps -n 1 -N 1
 #SBATCH --mem-per-cpu 1G
 
 #
@@ -33,7 +33,7 @@
 # then you MUST provide this line...it tells the node(s)
 # that you want to use this implementation of MPI. If you
 # omit this line, your results will indicate failure.
-spack load --first openmpi
+# spack load --first openmpi
 
 # Place your srun command here
 # Notice that you have to provide the number of processes that
@@ -42,9 +42,8 @@ spack load --first openmpi
 # not be valid or you may have wasted resources that others could
 # have used. Using $SLURM_NPROCS guarantees a match.
 
-# Question Set 1
 
-# 12 slave runs
-srun -n $SLURM_NPROCS mpi_hh -d 15 -c 10
-srun -n $SLURM_NPROCS mpi_hh -d 150 -c 10
-srun -n $SLURM_NPROCS mpi_hh -d 1500 -c 10
+# Question set 2 sequential runs
+./seq_hh -d 15 -c 10
+./seq_hh -d 150 -c 10
+./seq_hh -d 1500 -c 10

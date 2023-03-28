@@ -10,7 +10,7 @@
 # that information here, rather than the command line.
 
 # Name of the job - You MUST use a unique name for the job
-#SBATCH -J question_set_1_6
+#SBATCH -J qs2_6
 
 # Standard out and Standard Error output files
 # Each job should have a unique file name; otherwise, all of the
@@ -46,5 +46,5 @@ spack load --first openmpi
 
 # 5 slave runs
 srun -n $SLURM_NPROCS mpi_hh -d 15 -c 10
-srun -n $SLURM_NPROCS mpi_hh -d 15 -c 100
-srun -n $SLURM_NPROCS mpi_hh -d 15 -c 1000
+srun -n $SLURM_NPROCS mpi_hh -d 150 -c 10
+srun -n $SLURM_NPROCS mpi_hh -d 1500 -c 10
