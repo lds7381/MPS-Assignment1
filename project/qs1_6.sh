@@ -10,7 +10,7 @@
 # that information here, rather than the command line.
 
 # Name of the job - You MUST use a unique name for the job
-#SBATCH -J question_set_1_6
+#SBATCH -J qs1_6
 
 # Standard out and Standard Error output files
 # Each job should have a unique file name; otherwise, all of the
